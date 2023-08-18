@@ -1,32 +1,192 @@
-# Prerequisites
-*.d
-
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
-
-# Precompiled Headers
-*.gch
-*.pch
-
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
-
-# Fortran module files
-*.mod
-*.smod
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
-
-# Executables
-*.exe
-*.out
-*.app
+#include<bits/stdc++.h>
+using namespace std;
+struct node {
+    int data;
+    struct node *next;
+};
+struct node *first=0;
+void create(int a[], int n){
+    struct node *t,*last;
+    first=new node;
+    first->data=a[0];
+    first->next=0;
+    last=first;
+    for(int i=1; i<n; i++){
+        t=new node;
+        t->data=a[i];
+        t->next=0;
+        last->next=t;
+         last=t;
+    }
+}
+void count(struct node *p){
+    int count=0;
+    while(p!=0){
+        count++;
+        p=p->next;
+    }
+    cout<<count<<endl;
+}
+void sum_all(struct node *p){
+    int sum=0;
+    while(p!=0){
+        sum+=p->data;
+        p=p->next;
+    }
+    cout<<sum<<endl;
+}
+void max_elemt(struct node *p){
+    int maxx=INT_MIN;
+    while(p!=0){
+        maxx=max(maxx,p->data);
+        p=p->next;
+    }
+    cout<<maxx<<endl;
+}
+bool searching(struct node *p, int key){
+    while(p!=0){
+        if(p->data==key){
+            return true;
+        }
+        else{
+            p=p->next;
+        }
+    }
+    return false;
+}
+void insert(struct node *p,int key,int pos){
+    int count=0;
+    while(count<pos){
+        p=p->next;
+        count++;
+    }
+    struct node *t;
+    t=new node;
+    t->data=key;
+    t->next=p->next;
+    p->next=t;
+    
+   
+    
+}
+void display(struct node *p){
+    while(p!=0){
+        cout<<p->data<<" ";
+        p=p->next;
+    }
+}
+void using_insert(int key){
+    first=new node;
+    first->data=key;
+    first->next=0;
+}
+void sorted_insert(struct node *p,int key){
+    struct node *q=0;
+    while(p!=0){
+        if(key>p->data){
+            q=p;
+            p=p->next;
+        } else{
+            break;
+        }
+    }
+    struct node *t;
+    t=new node;
+    t->data=key;
+    t->next=p;
+    q->next=t;
+}
+void delete_key(struct node *p, int key){
+    struct node *q=0;
+    while(p!=0){
+       
+        if(key==p->data){
+            q->next=p->next;
+            free(p);
+            break;
+        }
+        else{
+            q=p;
+            p=p->next;
+            
+        }
+    }
+}
+void cheak_is_sorted(struct node *p){
+    int x=INT_MIN;
+    int flag=1;
+    while(p!=0){
+        
+        if(x<p->data){
+            x=p->data;
+            p=p->next;
+        }
+        else{
+            flag=0;
+            break;
+        }
+    }
+    if(flag==1){
+        cout<<"Sorted in order"<<endl;
+    }
+    else{
+        cout<<"Not sorted in order"<<endl;
+    }
+        
+       
+  
+}
+void is_duplicate(struct node *q){
+    struct node *p=first->next;
+    
+    while(p!=0){
+        if(p->data==q->data){
+            q->next=p->next;
+            free(p);
+            p=q->next;
+            
+        }
+        else{
+            q=p;
+            p=q->next;
+        }
+    }
+}
+void reverse(struct node *p,int n){
+    int arr[n];
+    int i=0;
+    while(p!=0){
+        arr[i]=p->data;
+        p=p->next;
+        i++;
+    }
+    p=first;--i;
+    while(p!=0){
+        p->data=arr[i];
+        p=p->next;
+        i--;
+    }
+    
+}
+int main(){
+    int a[]={1,2,3,3,9,9,67,67,89,90};
+    int n=sizeof(a)/sizeof(a[0]);
+    create(a,n);
+    //display(first);
+    //count(first);
+    //sum_all(first);
+    //max_elemt(first);
+    //cout<< searching(first,890);
+    //insert(first,7,7);
+    
+    //sorted_insert(first,33);
+   // delete_key(first,90);
+   //cheak_is_sorted(first);
+  
+   //is_duplicate(first);
+   reverse(first,n);
+    display(first);
+    
+    
+    return 0;
+}
